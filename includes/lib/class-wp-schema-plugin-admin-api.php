@@ -103,7 +103,8 @@ class wp_schema_plugin_Admin_API {
 				if ( $data && 'on' == $data ) {
 					$checked = 'checked="checked"';
 				}
-				$html .= '<input id="' . esc_attr( $field['id'] ) . '" type="' . esc_attr( $field['type'] ) . '" name="' . esc_attr( $option_name ) . '" ' . $checked . '/>' . "\n";
+				$html .= '<input id="' . esc_attr( $field['id'] ) . '" type="' . esc_attr( $field['type'] ) . '" class="tgl tgl-flat" name="' . esc_attr( $option_name ) . '" ' . $checked . '/>' . "\n";
+				$html .= '<label for="' . esc_attr( $field['id'] ) . '" class="tgl-btn"></label> ';
 			break;
 
 			case 'checkbox_multi':

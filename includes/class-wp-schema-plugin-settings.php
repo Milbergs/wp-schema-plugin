@@ -318,6 +318,13 @@ class wp_schema_plugin_Settings
 						'title'                  => __('Aggregate Rating', 'wp-schema-plugin'),
 						'description'            => __('Aggregate Rating Generator - seup Rating or make it automatic', 'wp-schema-plugin'),
 						'fields'                 => array(
+                array(
+                    'id'             => 'ToggleAutomatic',
+                    'label'          => __('Automatic Reviews (off/on)', 'wp-schema-plugin'),
+                    'description'    => __('Reviews will be gathered from Testimonial post type (Recommended)', 'wp-schema-plugin'),
+                    'type'           => 'checkbox',
+                    'default'        => ''
+                ),
 								array(
 										'id'             => 'ManualRating',
 										'label'          => __('Rating', 'wp-schema-plugin'),
