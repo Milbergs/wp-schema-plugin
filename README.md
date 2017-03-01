@@ -12,6 +12,7 @@ Features:
 
 Todo:
 * create Schema Person for one and/or more attorneys for even better Google™ Rich Snippets;
+* provide templates and loops for Testimonial post type;
 * create shortcode for star rating;
 * allow more Business types;
 * optimize code, search for security issues;
