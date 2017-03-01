@@ -49,44 +49,59 @@ class wp_schema_plugin_json{
 
     // collect all testimonials
     $queryTestimonials = query_posts('post_type=bustr_testimonials');
-    foreach($queryTestimonials as $testimonial){
-      if($testimonial->post_status == 'publish'){
-        $id = $testimonial->ID;
-        $name = $testimonial->post_title;
-        $content = $testimonial->post_content;
-        $date = $testimonial->post_date;
-        $rating = get_post_meta($id, '_wsp_stars')[0];
 
-        $allRatings[] = $rating;
+    if($queryTestimonials){
+      foreach($queryTestimonials as $testimonial){
+        if($testimonial->post_status == 'publish'){
+          $id = $testimonial->ID;
+          $name = $testimonial->post_title;
+          $content = $testimonial->post_content;
+          $date = $testimonial->post_date;
+          $rating = get_post_meta($id, '_wsp_stars')[0];
 
-        $reviews["review"][] = [
-          "@type" => "Review",
-          "author" => [
-            "@type" => "Person",
-            "name" => $name,
-          ],
-          "datePublished" => $date,
-          "description" => $content,
-          "inLanguage" => "en",
-          "reviewRating" => [
-            "@type" => "Rating",
-            "ratingValue" => $rating
-          ]
-        ];
+          $allRatings[] = $rating;
+
+          $reviews["review"][] = [
+            "@type" => "Review",
+            "author" => [
+              "@type" => "Person",
+              "name" => $name,
+            ],
+            "datePublished" => $date,
+            "description" => $content,
+            "inLanguage" => "en",
+            "reviewRating" => [
+              "@type" => "Rating",
+              "ratingValue" => $rating
+            ]
+          ];
+        }
       }
+    } else {
+      $reviews["review"][] = [];
     }
 
-    $ratingCount = count($allRatings);
-    $ratingValue = array_sum($allRatings) / $ratingCount;
-    $ratingValue = number_format($ratingValue, 1);
+    if(isset($allRatings)){
+      $ratingCount = count($allRatings);
+      $ratingValue = array_sum($allRatings) / $ratingCount;
+      $ratingValue = number_format($ratingValue, 1);
 
-    $aggregateRating = [
-      "aggregateRating" => [
-        "@type" => "AggregateRating",
-        "ratingValue" => $ratingValue,
-        "ratingCount" => $ratingCount
-      ]
-    ];
+      $aggregateRating = [
+        "aggregateRating" => [
+          "@type" => "AggregateRating",
+          "ratingValue" => $ratingValue,
+          "ratingCount" => $ratingCount
+        ]
+      ];
+    } else {
+      $aggregateRating = [
+        "aggregateRating" => [
+          "@type" => "AggregateRating",
+          "ratingValue" => 0,
+          "ratingCount" => 0
+        ]
+      ];
+    }
 
     // reset the query
     wp_reset_query();

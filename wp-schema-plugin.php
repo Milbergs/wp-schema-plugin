@@ -37,7 +37,7 @@ require_once( 'includes/lib/class-wp-schema-plugin-json.php' );
  * @return object wp_schema_plugin
  */
 function wp_schema_plugin () {
-	$instance = wp_schema_plugin::instance( __FILE__, '1.1.0' );
+	$instance = wp_schema_plugin::instance( __FILE__, '1.1.1' );
 
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = wp_schema_plugin_Settings::instance( $instance );
