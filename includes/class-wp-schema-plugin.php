@@ -82,7 +82,7 @@ class wp_schema_plugin {
 	 * @since   1.0.0
 	 * @return  void
 	 */
-	public function __construct ( $file = '', $version = '1.1.0' ) {
+	public function __construct ( $file = '', $version = '1.2.0' ) {
 
 		$this->_version = $version;
 		$this->_token = 'wp_schema_plugin';
@@ -228,7 +228,7 @@ class wp_schema_plugin {
 	 * @see wp_schema_plugin()
 	 * @return Main wp_schema_plugin instance
 	 */
-	public static function instance ( $file = '', $version = '1.0.0' ) {
+	public static function instance ( $file = '', $version = '1.2.0' ) {
 		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self( $file, $version );
 		}

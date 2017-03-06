@@ -10,13 +10,6 @@ Features:
 * provides Testimonial custom post type in menu and star rating system below the editor;
 * adds settings page with generous recommendations for better crawling, some fields have sane defaults, others default to best available alternative;
 
-Todo:
-* create Schema Person for one and/or more attorneys for even better Google™ Rich Snippets;
-* provide templates and loops for Testimonial post type;
-* create shortcode for star rating;
-* allow more Business types;
-* optimize code, search for security issues;
-
 ### Installing
 
 * drop this plugin in /wp-content/plugins/;

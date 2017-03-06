@@ -1,7 +1,7 @@
 {
 	"name": "wp-schema-plugin",
 	"title": "WordPress Plugin Template",
-	"version": "1.0.0",
+	"version": "1.1.2",
 	"homepage": "https://github.com/hlashbrooke/wp-schema-plugin",
 	"main": "Gruntfile.js",
 	"devDependencies": {
