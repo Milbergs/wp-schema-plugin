@@ -9,6 +9,7 @@ Features:
 * provides control over service rating shown on Google by manual means or automatic Testimonial loop;
 * provides Testimonial custom post type in menu and star rating system below the editor;
 * adds settings page with generous recommendations for better crawling, some fields have sane defaults, others default to best available alternative;
+* [wsp_stars] shortcode for individual testimonials;
 
 ### Installing
 
@@ -22,6 +23,16 @@ Features:
 * if used with Bustr theme, will use existing testimonials for automatic aggregation;
 * tested with php 7.0;
 * works with Wordpress 4 and up;
+
+## ToDo
+- Core
+ - create Schema Person for one and/or more attorneys for even better Google™ Rich Snippets;
+ - optimize js code, search for security issues;
+ - clean uninstall;
+ - create multiple department support with dynamic settings subpage;
+ - create shortcodes for every department;
+ - provide templates for 'bustr_testimonial-single' and 'bustr_testimonial';
+ - allow more Business types;
 
 ## Built With
 

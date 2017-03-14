@@ -5,7 +5,7 @@
 function wsp_add_meta_box() {
 
         add_meta_box(
-                'wsp_sectionid', 'User rating', 'wsp_meta_box_callback', 'bustr_testimonials'
+                'wsp_sectionid', 'User rating', 'wsp_meta_box_callback', 'wsp_testimonials', 'side', 'high'
         ); //you can change the 4th paramter i.e. post to custom post type name, if you want it for something else
 
 }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: WP Schema Plugin
- * Version: 1.2.0
+ * Version: 1.3.0
  * Plugin URI: http://www.onthemapmarketing.com/
  * Description: Schema enhancement for Wordpress.
  * Author: On The Map Marketing
@@ -38,7 +38,7 @@ require_once( 'includes/lib/class-wp-schema-plugin-jsonld.php' );
  * @return object wp_schema_plugin
  */
 function wp_schema_plugin () {
-	$instance = wp_schema_plugin::instance( __FILE__, '1.2.0' );
+	$instance = wp_schema_plugin::instance( __FILE__, '1.3.0' );
 
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = wp_schema_plugin_Settings::instance( $instance );
@@ -47,5 +47,12 @@ function wp_schema_plugin () {
 	return $instance;
 }
 
+
+// start the plugin
 wp_schema_plugin();
-wp_schema_plugin()->register_post_type( 'bustr_testimonials', __( 'Testimonials', 'wp-schema-plugin' ), __( 'Testimonials', 'wp-schema-plugin' ) );
+
+// create custom testimonial post type
+wp_schema_plugin()->register_post_type( 'wsp_testimonials', __( 'Testimonials', 'wp-schema-plugin' ), __( 'Testimonials', 'wp-schema-plugin' ) );
+
+// require to use custom archive page for testimonials
+// require plugin_dir_url( '/assets/archives-wsp_testimonials.php' );

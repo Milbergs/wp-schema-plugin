@@ -1,0 +1,17 @@
+.wsp{
+  &-review {
+    text-align: center;
+    p + p {
+      margin-bottom: 0;
+    }
+    &-content {
+      font-style: italic
+    }
+    &-rating {
+      color: gold
+    }
+    &-name {
+      text-transform: capitalize
+    }
+  }
+}

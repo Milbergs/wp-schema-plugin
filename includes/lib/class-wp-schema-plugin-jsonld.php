@@ -21,8 +21,8 @@ class wp_schema_plugin_json {
     $jsonld['contactPoint'] = self::contactPoint();
     // $this->departments = self::departments();
     $jsonld['sameAs'] = self::sameAs();
-    $jsonld['aggregateRating'] = self::aggregateRating()['aggregateRating'];
-    $jsonld['review'] = self::aggregateRating()['review'];
+    $jsonld['aggregateRating'] = self::aggregateRating();
+    $jsonld['review'] = self::review();
 
     $jsonld = array_filter($jsonld);
 
@@ -150,81 +150,93 @@ class wp_schema_plugin_json {
   } // sameAs
 
   /*
-  * return rating
+  * return review
+  */
+  public function review(){
+
+    // determine if automatic or manly
+    $mode = get_option('wsp_ToggleAutomatic');
+
+    if($mode == 'on'){
+      global $wpdb;
+      $testimonials = $wpdb->get_results( "SELECT ID, post_title, post_content, post_date FROM wp_posts WHERE post_type = 'wsp_testimonials' AND post_status = 'publish'", ARRAY_A );
+
+      if($testimonials){
+        foreach($testimonials as $testimonial){
+          $id = $testimonial['ID'];
+          $name = $testimonial['post_title'];
+          $content = $testimonial['post_content'];
+          $date = $testimonial['post_date'];
+          $stars = get_post_meta($id, '_wsp_stars', true);
+
+          $review[] = [
+            "@type" => "Review",
+            "author" => [
+              "@type" => "Person",
+              "name" => $name,
+            ],
+            "datePublished" => $date,
+            "description" => $content,
+            "inLanguage" => "en",
+            "reviewRating" => [
+              "@type" => "Rating",
+              "ratingValue" => $stars
+            ]
+          ];
+        }
+      } else {
+        $review[] = false;
+      }
+    } else {
+      $review[] = false;
+    }
+
+    return $review;
+
+  } // rating
+
+
+  /*
+  * AggregateRating
   */
   public function aggregateRating(){
 
     // determine if automatic or manly
     $mode = get_option('wsp_ToggleAutomatic');
 
+    // if automatic ... else ...
     if($mode == 'on'){
-      $queryTestimonials = query_posts('post_type=bustr_testimonials');
+      global $wpdb;
+      $results = $wpdb->get_results( "SELECT meta_value FROM wp_postmeta WHERE meta_key = '_wsp_stars'", ARRAY_A );
 
-      if($queryTestimonials){
-        foreach($queryTestimonials as $testimonial){
-          if($testimonial->post_status == 'publish'){
-            $id = $testimonial->ID;
-            $name = $testimonial->post_title;
-            $content = $testimonial->post_content;
-            $date = $testimonial->post_date;
-            $ratingStars = get_post_meta($id, '_wsp_stars')[0];
-
-            $allRatings[] = $ratingStars;
-
-            $rating["review"][] = [
-              "@type" => "Review",
-              "author" => [
-                "@type" => "Person",
-                "name" => $name,
-              ],
-              "datePublished" => $date,
-              "description" => $content,
-              "inLanguage" => "en",
-              "reviewRating" => [
-                "@type" => "Rating",
-                "ratingValue" => $ratingStars
-              ]
-            ];
-          }
+      if($results){
+        foreach($results as $result){
+          $scores[] = $result['meta_value'];
         }
+
+        $reviewCount = count($scores);
+        $ratingValue = array_sum($scores) / $reviewCount;
+
       } else {
-        $rating["review"][] = [];
+        $reviewCount = false;
+        $ratingValue = false;
       }
-
-      if(isset($allRatings)){
-        $ratingCount = count($allRatings);
-        $ratingValue = array_sum($allRatings) / $ratingCount;
-        $ratingValue = number_format($ratingValue, 1);
-
-        $rating['aggregateRating'] = [
-          "@type" => "AggregateRating",
-          "ratingValue" => $ratingValue,
-          "ratingCount" => $ratingCount
-        ];
-      } else {
-        $rating['aggregateRating'] = [
-          "@type" => "AggregateRating",
-          "ratingValue" => 0,
-          "ratingCount" => 0
-        ];
-      }
-
-      // reset the query
-      wp_reset_query();
-
     } else {
-      $rating['aggregateRating'] = [
-        "aggregateRating" => [
-          "@type" => "AggregateRating",
-          "ratingValue" => get_option('wsp_ManualRating'),
-          "reviewCount" => get_option('wsp_ManualReviews')
-        ]
-      ];
+      $ratingValue = get_option('wsp_ManualRating');
+      $reviewCount = get_option('wsp_ManualReviews');
     }
 
+    $rating = [
+      "@type" => "AggregateRating",
+      "ratingValue" => $ratingValue,
+      "reviewCount" => $reviewCount
+    ];
+
     return $rating;
-  } // rating
+  }
 }
+
+
 
 
 function wsp_json() {
