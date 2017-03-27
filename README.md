@@ -25,14 +25,7 @@ Features:
 * works with Wordpress 4 and up;
 
 ## ToDo
-- Core
- - create Schema Person for one and/or more attorneys for even better Google™ Rich Snippets;
- - optimize js code, search for security issues;
- - clean uninstall;
- - create multiple department support with dynamic settings subpage;
- - create shortcodes for every department;
- - provide templates for 'bustr_testimonial-single' and 'bustr_testimonial';
- - allow more Business types;
+See CHANGELOG.md for details
 
 ## Built With
 

@@ -6,27 +6,41 @@ where all the magic happens
 class wp_schema_plugin_json {
 
   public function construct()  {
-    $jsonld['@context'] = 'http://www.schema.org';
-    $jsonld['@type'] = get_option('wsp_LocalBusinessType');
-    $jsonld['@id'] = get_bloginfo('wpurl');
-    $jsonld['name'] = get_option('wsp_BusinessName');
-    $jsonld['description'] = get_option('wsp_Description');
-    $jsonld['telephone'] = '+1' . get_option('wsp_BusinessPhone');
-    $jsonld['url'] = get_bloginfo('wpurl');
-    $jsonld['logo'] = wp_get_attachment_image_src(get_option('wsp_BusinessLogo'))[0];
-    $jsonld['image'] = wp_get_attachment_image_src(get_option('wsp_BusinessLogo'))[0];
-    $jsonld['address'] = self::address();
-    $jsonld['geo'] = self::geo();
-    $jsonld['openingHours'] = self::openingHours();
-    $jsonld['contactPoint'] = self::contactPoint();
+    // JSON for localbusiness
+    $localBusiness['@context'] = 'http://schema.org';
+    $localBusiness['@type'] = get_option('wsp_LocalBusinessType');
+    $localBusiness['@id'] = get_bloginfo('wpurl') . "/";
+    $localBusiness['name'] = get_option('wsp_BusinessName');
+    $localBusiness['description'] = get_option('wsp_Description');
+    $localBusiness['telephone'] = '+1' . get_option('wsp_BusinessPhone');
+    $localBusiness['url'] = get_bloginfo('wpurl');
+    $localBusiness['logo'] = wp_get_attachment_image_src(get_option('wsp_BusinessLogo'))[0];
+    $localBusiness['image'] = wp_get_attachment_image_src(get_option('wsp_BusinessLogo'))[0];
+    $localBusiness['address'] = self::address();
+    $localBusiness['geo'] = self::geo();
+    $localBusiness['openingHours'] = self::openingHours();
+    $localBusiness['contactPoint'] = self::contactPoint();
     // $this->departments = self::departments();
-    $jsonld['sameAs'] = self::sameAs();
-    $jsonld['aggregateRating'] = self::aggregateRating();
-    $jsonld['review'] = self::review();
+    $localBusiness['priceRange'] = self::priceRange();
+    $localBusiness['sameAs'] = self::sameAs();
+    $localBusiness['aggregateRating'] = self::aggregateRating();
+    $localBusiness['review'] = self::review();
+    $localBusiness = array_filter($localBusiness);
 
-    $jsonld = array_filter($jsonld);
+    $schema[] = $localBusiness;
 
-    return json_encode($jsonld);
+    // JSON for Breadcrumbs
+    if(get_option('wsp_Breadcrumbs')){
+      $breadCrumbs['@context'] = "http://schema.org";
+      $breadCrumbs['@type'] = "BreadcrumbList";
+      $breadCrumbs['itemListElement'] = self::breadcrumbs_json();
+
+      $schema[] = $breadCrumbs;
+    }
+
+    $json = json_encode($schema, JSON_UNESCAPED_SLASHES);
+
+    return $json;
   }
 
   /*
@@ -55,7 +69,7 @@ class wp_schema_plugin_json {
       "longitude" => get_option('wsp_Longtitude')
     ];
 
-    return (object) $geo;
+    return $geo;
   } // geo
 
   /*
@@ -130,6 +144,17 @@ class wp_schema_plugin_json {
   // } // departments
 
   /*
+  * price range
+  */
+  public function priceRange(){
+    $priceRange = get_option('wsp_PriceRange');
+
+    if($priceRange){
+      return $priceRange;
+    }
+  } // price range
+
+  /*
   * return social profiles
   */
   public function sameAs(){
@@ -146,55 +171,10 @@ class wp_schema_plugin_json {
       "Tumblr" => get_option('wsp_social_tumblr')
     ];
 
+    $sameAs = array_filter($sameAs);
+
     return array_values($sameAs);
   } // sameAs
-
-  /*
-  * return review
-  */
-  public function review(){
-
-    // determine if automatic or manly
-    $mode = get_option('wsp_ToggleAutomatic');
-
-    if($mode == 'on'){
-      global $wpdb;
-      $testimonials = $wpdb->get_results( "SELECT ID, post_title, post_content, post_date FROM wp_posts WHERE post_type = 'wsp_testimonials' AND post_status = 'publish'", ARRAY_A );
-
-      if($testimonials){
-        foreach($testimonials as $testimonial){
-          $id = $testimonial['ID'];
-          $name = $testimonial['post_title'];
-          $content = $testimonial['post_content'];
-          $date = $testimonial['post_date'];
-          $stars = get_post_meta($id, '_wsp_stars', true);
-
-          $review[] = [
-            "@type" => "Review",
-            "author" => [
-              "@type" => "Person",
-              "name" => $name,
-            ],
-            "datePublished" => $date,
-            "description" => $content,
-            "inLanguage" => "en",
-            "reviewRating" => [
-              "@type" => "Rating",
-              "ratingValue" => $stars
-            ]
-          ];
-        }
-      } else {
-        $review[] = false;
-      }
-    } else {
-      $review[] = false;
-    }
-
-    return $review;
-
-  } // rating
-
 
   /*
   * AggregateRating
@@ -233,19 +213,207 @@ class wp_schema_plugin_json {
     ];
 
     return $rating;
-  }
+  }// Aggregate Rating
+
+  /*
+  * return review
+  */
+  public function review(){
+    // determine if automatic or manly
+    $mode = get_option('wsp_ToggleAutomatic');
+
+    if($mode == 'on'){
+      global $wpdb;
+      $testimonials = $wpdb->get_results( "SELECT ID, post_title, post_content, post_date FROM wp_posts WHERE post_type = 'wsp_testimonials' AND post_status = 'publish'", ARRAY_A );
+
+      if($testimonials){
+        foreach($testimonials as $testimonial){
+          $id = $testimonial['ID'];
+          $name = $testimonial['post_title'];
+          $content = $testimonial['post_content'];
+          $date = $testimonial['post_date'];
+          $stars = get_post_meta($id, '_wsp_stars', true);
+
+          $review[] = [
+            "@type" => "Review",
+            "author" => [
+              "@type" => "Person",
+              "name" => $name,
+            ],
+            "datePublished" => $date,
+            "description" => $content,
+            "inLanguage" => "en",
+            "reviewRating" => [
+              "@type" => "Rating",
+              "ratingValue" => $stars
+            ]
+          ];
+        }
+      } else {
+        $review = false;
+      }
+      return $review;
+    }
+  } // rating
+
+
+  /*
+  * Breadcrumbs
+  */
+  public function get_breadcrumbs(){
+
+    // Include Home breadcrumb
+    $crumbs[] = [
+      'url' => get_bloginfo('wpurl'),
+      'title' => __('Home', 'wp-schema-plugin')
+    ];
+
+    // blog articles
+    if(is_single()){
+
+      $current_category = get_the_category(get_the_ID());
+      $current_category_id = $current_category[0]->cat_ID;
+      $current_category_link = get_category_link($current_category_id);
+      $current_category_title = get_cat_name($current_category_id);
+      $current_ancestors = get_ancestors($current_category_id, 'category');
+      $current_ancestors = array_reverse($current_ancestors);
+      foreach($current_ancestors as $key => $ancestor){
+        $crumbs[] = [
+          'url' => get_category_link($ancestor),
+          'title' => get_cat_name($ancestor)
+        ];
+      }
+      // for current category
+       $crumbs[] = [
+         'url' => $current_category_link,
+         'title' => $current_category_title
+       ];
+
+      // for current post
+      $crumbs[] = [
+        'url' => get_permalink(),
+        'title' => get_the_title()
+      ];
+    }
+    // is pages
+    elseif(is_page()){
+      $current_ancestors = get_post_ancestors(get_the_ID());
+      $current_ancestors = array_reverse($current_ancestors);
+
+      foreach($current_ancestors as $key => $ancestor){
+        $crumbs[] = [
+          'url' => get_permalink($ancestor),
+          'title' => get_the_title($ancestor)
+        ];
+      }
+    }
+    // categories
+    elseif(is_category()){
+      $current_category = get_category( get_query_var( 'cat' ) );
+      $current_category_id = $current_category->cat_ID;
+      $current_category_link = get_category_link($current_category_id);
+      $current_category_title = get_cat_name($current_category_id);
+      $current_ancestors = get_ancestors($current_category_id, 'category');
+      $current_ancestors = array_reverse($current_ancestors);
+
+      foreach($current_ancestors as $key => $ancestor){
+        $crumbs[] = [
+          'url' => get_category_link($ancestor),
+          'title' => get_cat_name($ancestor)
+        ];
+      }
+
+      $crumbs[] = [
+        'url' => $current_category_link,
+        'title' => $current_category_title
+      ];
+
+    }
+
+    $crumbs[] = [
+      'url' => get_permalink(get_permalink()),
+      'title' => get_the_title(get_the_title())
+    ];
+
+    // echo '<h1 styl="color: salmon;"> ' . count($crumbs) . '</h1><pre>';
+    // print_r($crumbs);
+    // echo "</pre>";
+
+    $crumbs = array_filter(array_map('array_filter', $crumbs));
+
+    return $crumbs;
+  } // end of get_crumbs
+
+  /*
+  * Breadcrums in HTML
+  */
+  public function breadcrumbs_html(){
+    $crumbs = self::get_breadcrumbs();
+    $separator = get_option('wsp_BreadcrumbSpacing');
+    $count = count($crumbs) - 1;
+    $bread = null;
+
+    if($separator){
+      if($separator == 'nothing'){
+        $separator = '';
+      } else {
+        $separator = ' ' . $separator . ' ';
+      }
+    } else {
+      $separator = ' / ';
+    }
+
+    foreach($crumbs as $key => $crumb){
+      // make link
+      $slice = '<a class="wsp wsp-crumb wsp-crumb-' . $key . '" href="' . $crumb['url'] . '" title="' . $crumb['title'] . '">' . $crumb['title'] . '</a>';
+
+      // if is not last, add separator
+      if($count > $key){
+        $slice .= '<span class="wsp wsp-crumb-separator">' . $separator . '</span>';
+      }
+
+      // add slice to bread
+      $bread .= $slice;
+    }
+
+    return $bread;
+  } // end breadcrumb_html
+
+  /*
+  * Breadcrumbs in JSON
+  */
+  public function breadcrumbs_json(){
+    $status = get_option('wsp_Breadcrumbs');
+    $crumbs = self::get_breadcrumbs();
+
+    if($status == 'on'){
+      $count = 0;
+
+      foreach($crumbs as $crumb){
+        $count += 1;
+        $slices[] = [
+          "@type" => "ListItem",
+          "position" => $count,
+          "item" => [
+            "@id" => $crumb['url'],
+            "name" => $crumb['title']
+          ]
+        ];
+      }
+
+      return $slices;
+    }
+  }// breadcrumb json
+
 }
-
-
-
 
 function wsp_json() {
   $jsonld = new wp_schema_plugin_json;
   $jsonld = $jsonld->construct();
 
-  echo "<script type='application/ld+json'>";
+  echo '<script type="application/ld+json">';
   echo $jsonld;
-  echo "</script>";
+  echo '</script>';
 }
 
 add_action('wp_head', 'wsp_json');

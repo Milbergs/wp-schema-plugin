@@ -24,7 +24,6 @@ function wsp_rating() {
 /*
 *	returns formatted testimonial loop
 */
-
 function wsp_testimonials( /*$atts, $content = null*/ ) {
     // $a = shortcode_atts( array(
     //     'attr_1' => 'attribute 1 default',
@@ -48,9 +47,21 @@ function wsp_testimonials( /*$atts, $content = null*/ ) {
 }
 
 
+/*
+*	returns breadcrumbs
+*/
+function wsp_breadcrumbs() {
+	$crumbs = new wp_schema_plugin_json();
+	$html = $crumbs->breadcrumbs_html();
 
+	echo $html;
+}
 
+/*
+*	Now bring them to life
+*/
 add_shortcode( 'wsp_rating', 'wsp_rating' );
 add_shortcode( 'wsp_testimonials', 'wsp_testimonials' );
+add_shortcode( 'wsp_breadcrumbs', 'wsp_breadcrumbs' );
 
 ?>

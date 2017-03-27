@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## ToDo
+- core
+  - create Schema Person for one and/or more attorneys for even better Google™ Rich Snippets;
+  - optimize js code, search for security issues;
+  - clean uninstall;
+  - create multiple department support with dynamic settings subpage;
+  - create shortcodes for every department;
+  - new shortcode to call settings elements (addresses, phone numbers etc);
+  - new shortcode to display either all or individual social network profiles;
+- testimonial shortcode
+  - allow display single testimonial by id;
+- JSONLD for menu items (must sort out ID uniqueness problem);
+
+## [1.3.1] - 2017-03-17
+### Added
+- priceRange ($ - cheap, $$ - inexpensive, $$$ - expensive, $$$$ - bourgeois) or simply $50 - $500
+- added all subtypes for LocalBusiness type;
+- added breadcrumb support to JSON+LD;
+- [wsp_breadcrumbs] shortcode and appropriate styling classes to display breadcrumb trail;
+ - added option to chose between different separators, custom separators may be implemented with css wsp-crumb:after pseudo-element;
+
+### Fixed
+- reviews showing in JSON when they are disable;
+
 ## [1.3.0] - 2017-03-10
 ### Added
 - shortcode [wsp_rating] star rating for individual testimonials;
