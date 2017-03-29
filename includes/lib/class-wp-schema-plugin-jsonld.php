@@ -14,8 +14,8 @@ class wsp_localbusiness {
     $localBusiness['description'] = get_option('wsp_Description');
     $localBusiness['telephone'] = '+1' . get_option('wsp_BusinessPhone');
     $localBusiness['url'] = get_bloginfo('wpurl');
-    $localBusiness['logo'] = wp_get_attachment_image_src(get_option('wsp_BusinessLogo'))[0];
-    $localBusiness['image'] = wp_get_attachment_image_src(get_option('wsp_BusinessLogo'))[0];
+    $localBusiness['logo'] = self::businessLogo();
+    $localBusiness['image'] = self::businessImage();
     $localBusiness['address'] = self::address();
     $localBusiness['geo'] = self::geo();
     $localBusiness['openingHours'] = self::openingHours();
@@ -30,6 +30,24 @@ class wsp_localbusiness {
     // $json = json_encode($localBusiness, JSON_UNESCAPED_SLASHES);
 
     return (object) $localBusiness;
+  }
+
+  public function businessLogo(){
+    $logoObject = get_option('wsp_BusinessLogo');
+    if($logoObject){
+      $logoSrc = wp_get_attachment_image_src($logoObject);
+      $logoUrl = $logoSrc[0];
+      return $logoUrl;
+    }
+  }
+
+  public function businessImage(){
+    $logoObject = get_option('wsp_BusinessImage');
+    if($logoObject){
+      $logoSrc = wp_get_attachment_image_src($logoObject);
+      $logoUrl = $logoSrc[0];
+      return $logoUrl;
+    }
   }
 
   /*
