@@ -128,7 +128,7 @@ class wp_schema_plugin_Settings
         $indent = '&nbsp;&nbsp;';
         $settings['localBusiness'] = array(
             'title'                  => __('Local Business', 'wp-schema-plugin'),
-            'description'            => __('Be as precise as possible', 'wp-schema-plugin'),
+            'description'            => __('Be as precise as possible. <a target="_blank" href="https://search.google.com/structured-data/testing-tool/u/0/#url='.get_bloginfo('wpurl').'">Test your schema</a>', 'wp-schema-plugin'),
             'fields'                 => array(
                 array(
                     'id'             => 'LocalBusinessType',
@@ -330,7 +330,7 @@ class wp_schema_plugin_Settings
 										'label'          => __('Country', 'wp-schema-plugin'),
 										'description'    => __('The 2-letter <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2" target="_blank">ISO 3166-1 alpha-2 country code</a>', 'wp-schema-plugin'),
 										'type'           => 'text',
-										'default'        => '',
+										'default'        => 'US',
 										'placeholder'    => __('', 'wp-schema-plugin')
 								),
 								array(
@@ -355,7 +355,7 @@ class wp_schema_plugin_Settings
 										'description'    => __('', 'wp-schema-plugin'),
 										'type'           => 'checkbox_multi',
 										'options'        => array( 'Mo' => 'Monday<br>', 'Tu' => 'Tuesday<br>', 'We' => 'Wednesday<br>', 'Th' => 'Thursday<br>', 'Fr' => 'Friday<br>', 'Sa' => 'Saturday<br>', 'Su' => 'Sunday<br>' ),
-										'default'        => array( 'circle', 'triangle' )
+										'default'        => array( 'Mo', 'Tu', 'We', 'Th', 'Fr' )
 								),
 								array(
 										'id'             => 'BusinessHoursOpening',
@@ -363,7 +363,7 @@ class wp_schema_plugin_Settings
 										'description'    => __('', 'wp-schema-plugin'),
 										'type'           => 'select',
 										'options'				 => array('01:00' => '00:00', '01:00' => '00:30', '01:00' => '01:00', '01:30' => '01:30', '02:00' => '02:00', '02:30' => '02:30', '03:00' => '03:00', '03:30' => '03:30', '04:00' => '04:00', '04:30' => '04:30', '05:00' => '05:00', '05:30' => '05:30', '06:00' => '06:00', '06:30' => '06:30', '07:00' => '07:00', '07:30' => '07:30', '08:00' => '08:00', '08:30' => '08:30', '09:00' => '09:00', '09:30' => '09:30', '10:00' => '10:00', '10:30' => '10:30', '11:00' => '11:00', '11:30' => '11:30', '12:00' => '12:00', '12:30' => '12:30', '13:00' => '13:00', '13:30' => '13:30', '14:00' => '14:00', '14:30' => '14:30', '15:00' => '15:00', '15:30' => '15:30', '16:00' => '16:00', '16:30' => '16:30', '17:00' => '17:00', '17:30' => '17:30', '18:00' => '18:00', '18:30' => '18:30', '19:00' => '19:00', '19:30' => '19:30', '20:00' => '20:00', '20:30' => '20:30', '21:00' => '21:00', '21:30' => '21:30', '22:00' => '22:00', '22:30' => '22:30', '23:00' => '23:00', '23:30' => '23:30'),
-										'default'        => array( 'circle', 'triangle' )
+										'default'        => array( )
 								),
 								array(
 										'id'             => 'BusinessHoursClosing',

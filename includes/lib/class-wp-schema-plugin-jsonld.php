@@ -12,7 +12,7 @@ class wsp_localbusiness {
     $localBusiness['@id'] = '#LocalBusiness';
     $localBusiness['name'] = get_option('wsp_BusinessName');
     $localBusiness['description'] = get_option('wsp_Description');
-    $localBusiness['telephone'] = '+1' . get_option('wsp_BusinessPhone');
+    $localBusiness['telephone'] = get_option('wsp_BusinessPhone');
     $localBusiness['url'] = get_bloginfo('wpurl');
     $localBusiness['logo'] = self::businessLogo();
     $localBusiness['image'] = self::businessImage();
@@ -165,7 +165,7 @@ class wsp_localbusiness {
   * return social profiles
   */
   public function sameAs(){
-    $sameAs = [
+    $sameAs = array(
       "Facebook" => get_option('wsp_social_facebook'),
       "Twitter" => get_option('wsp_social_twitter'),
       "Google+" => get_option('wsp_social_google-plus'),
@@ -176,7 +176,7 @@ class wsp_localbusiness {
       "Pinterest" => get_option('wsp_social_pinterest'),
       "Soundcloud" => get_option('wsp_social_soundcloud'),
       "Tumblr" => get_option('wsp_social_tumblr')
-    ];
+    );
 
     $sameAs = array_filter($sameAs);
 
@@ -213,11 +213,11 @@ class wsp_localbusiness {
       $reviewCount = get_option('wsp_ManualReviews');
     }
 
-    $rating = [
+    $rating = array(
       "@type" => "AggregateRating",
       "ratingValue" => $ratingValue,
       "reviewCount" => $reviewCount
-    ];
+    );
 
     return $rating;
   }// Aggregate Rating
@@ -241,20 +241,20 @@ class wsp_localbusiness {
           $date = $testimonial['post_date'];
           $stars = get_post_meta($id, '_wsp_stars', true);
 
-          $review[] = [
+          $review[] = array(
             "@type" => "Review",
-            "author" => [
+            "author" => array(
               "@type" => "Person",
               "name" => $name,
-            ],
+            ),
             "datePublished" => $date,
             "description" => $content,
             "inLanguage" => "en",
-            "reviewRating" => [
+            "reviewRating" => array(
               "@type" => "Rating",
               "ratingValue" => $stars
-            ]
-          ];
+            )
+          );
         }
       } else {
         $review = false;
@@ -281,10 +281,10 @@ class wsp_breadcrumbs {
   public function get_breadcrumbs(){
 
     // Include Home breadcrumb
-    $crumbs[] = [
+    $crumbs[] = array(
       'url' => get_bloginfo('wpurl'),
       'title' => __('Home', 'wp-schema-plugin')
-    ];
+    );
 
     // blog articles
     if(is_single()){
@@ -296,22 +296,22 @@ class wsp_breadcrumbs {
       $current_ancestors = get_ancestors($current_category_id, 'category');
       $current_ancestors = array_reverse($current_ancestors);
       foreach($current_ancestors as $key => $ancestor){
-        $crumbs[] = [
+        $crumbs[] = array(
           'url' => get_category_link($ancestor),
           'title' => get_cat_name($ancestor)
-        ];
+        );
       }
       // for current category
-       $crumbs[] = [
+       $crumbs[] = array(
          'url' => $current_category_link,
          'title' => $current_category_title
-       ];
+       );
 
       // for current post
-      $crumbs[] = [
+      $crumbs[] = array(
         'url' => get_permalink(),
         'title' => get_the_title()
-      ];
+      );
     }
     // is pages
     elseif(is_page()){
@@ -319,10 +319,10 @@ class wsp_breadcrumbs {
       $current_ancestors = array_reverse($current_ancestors);
 
       foreach($current_ancestors as $key => $ancestor){
-        $crumbs[] = [
+        $crumbs[] = array(
           'url' => get_permalink($ancestor),
           'title' => get_the_title($ancestor)
-        ];
+        );
       }
     }
     // categories
@@ -335,23 +335,23 @@ class wsp_breadcrumbs {
       $current_ancestors = array_reverse($current_ancestors);
 
       foreach($current_ancestors as $key => $ancestor){
-        $crumbs[] = [
+        $crumbs[] = array(
           'url' => get_category_link($ancestor),
           'title' => get_cat_name($ancestor)
-        ];
+        );
       }
 
-      $crumbs[] = [
+      $crumbs[] = array(
         'url' => $current_category_link,
         'title' => $current_category_title
-      ];
+      );
 
     }
 
-    $crumbs[] = [
+    $crumbs[] = array(
       'url' => get_permalink(get_permalink()),
       'title' => get_the_title(get_the_title())
-    ];
+    );
 
     $crumbs = array_filter(array_map('array_filter', $crumbs));
 
@@ -405,14 +405,14 @@ class wsp_breadcrumbs {
 
       foreach($crumbs as $crumb){
         $count += 1;
-        $slices[] = [
+        $slices[] = array(
           "@type" => "ListItem",
           "position" => $count,
-          "item" => [
+          "item" => array(
             "@id" => $crumb['url'],
             "name" => $crumb['title']
-          ]
-        ];
+          )
+        );
       }
 
       return $slices;
@@ -432,7 +432,7 @@ function wsp_json() {
     $breadcrumbs = $breadcrumbs->construct();
     $json[] = $breadcrumbs;
   }
-  $html .= json_encode($json, JSON_UNESCAPED_SLASHES);
+  $html .= json_encode($json);
   $html .= '</script>' . "\n";
 
   echo $html;
