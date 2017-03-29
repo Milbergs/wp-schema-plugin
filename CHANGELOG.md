@@ -17,7 +17,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - allow display single testimonial by id;
 - JSONLD for menu items (must sort out ID uniqueness problem);
 
-## [1.3.1] - 2017-03-17
+## [1.3.2] - 2017-03-29
+### Added
+- Settings "articles" option that displays dropdown box of articles;
+
+### Changed
+- optimized php, some conflicts solved;
+
+### Fixed
+ - solved "id" conflict;
+ - fixed documentation with shortcode attributes;
+
+## [1.3.1] - 2017-03-27
 ### Added
 - priceRange ($ - cheap, $$ - inexpensive, $$$ - expensive, $$$$ - bourgeois) or simply $50 - $500
 - added all subtypes for LocalBusiness type;
