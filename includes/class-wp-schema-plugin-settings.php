@@ -290,7 +290,7 @@ class wp_schema_plugin_Settings
 										'label'          => __('Description', 'wp-schema-plugin'),
 										'description'    => __('Description of the business', 'wp-schema-plugin'),
 										'type'           => 'text',
-										'default'        => '',
+										'default'        => get_bloginfo('description'),
 										'placeholder'    => __('', 'wp-schema-plugin')
 								),
 								array(
@@ -522,6 +522,48 @@ class wp_schema_plugin_Settings
               )
             )
         );
+        // $settings['Navigation'] = array(
+        //   'title'                  => __('Navigation', 'wp-schema-plugin'),
+        //   'description'            => __('Navigation', 'wp-schema-plugin'),
+        //   'fields'                 => array(
+        //     array(
+        //         'id'             => 'navsnip1',
+        //         'label'          => __('Navigation snippet #1', 'wp-schema-plugin'),
+        //         'description'    => __('', 'wp-schema-plugin'),
+        //         'type'           => 'articles'
+        //     ),
+        //     array(
+        //         'id'             => 'navsnip2',
+        //         'label'          => __('Navigation snippet #2', 'wp-schema-plugin'),
+        //         'description'    => __('', 'wp-schema-plugin'),
+        //         'type'           => 'articles'
+        //     ),
+        //     array(
+        //         'id'             => 'navsnip3',
+        //         'label'          => __('Navigation snippet #3', 'wp-schema-plugin'),
+        //         'description'    => __('', 'wp-schema-plugin'),
+        //         'type'           => 'articles'
+        //     ),
+        //     array(
+        //         'id'             => 'navsnip4',
+        //         'label'          => __('Navigation snippet #4', 'wp-schema-plugin'),
+        //         'description'    => __('', 'wp-schema-plugin'),
+        //         'type'           => 'articles'
+        //     ),
+        //     array(
+        //         'id'             => 'navsnip5',
+        //         'label'          => __('Navigation snippet #5', 'wp-schema-plugin'),
+        //         'description'    => __('', 'wp-schema-plugin'),
+        //         'type'           => 'articles'
+        //     ),
+        //     array(
+        //         'id'             => 'navsnip6',
+        //         'label'          => __('Navigation snippet #6', 'wp-schema-plugin'),
+        //         'description'    => __('', 'wp-schema-plugin'),
+        //         'type'           => 'articles'
+        //     )
+        //   )
+        // );
         $settings['Breadcrumbs'] = array(
             'title'                  => __('Breadcrumbs', 'wp-schema-plugin'),
             'description'            => __('Breadcrumbs', 'wp-schema-plugin'),

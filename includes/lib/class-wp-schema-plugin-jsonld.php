@@ -3,13 +3,13 @@
 where all the magic happens
 */
 
-class wp_schema_plugin_json {
+class wsp_localbusiness {
 
   public function construct()  {
     // JSON for localbusiness
     $localBusiness['@context'] = 'http://schema.org';
     $localBusiness['@type'] = get_option('wsp_LocalBusinessType');
-    $localBusiness['@id'] = get_bloginfo('wpurl') . "/";
+    $localBusiness['@id'] = '#LocalBusiness';
     $localBusiness['name'] = get_option('wsp_BusinessName');
     $localBusiness['description'] = get_option('wsp_Description');
     $localBusiness['telephone'] = '+1' . get_option('wsp_BusinessPhone');
@@ -27,20 +27,9 @@ class wp_schema_plugin_json {
     $localBusiness['review'] = self::review();
     $localBusiness = array_filter($localBusiness);
 
-    $schema[] = $localBusiness;
+    // $json = json_encode($localBusiness, JSON_UNESCAPED_SLASHES);
 
-    // JSON for Breadcrumbs
-    if(get_option('wsp_Breadcrumbs')){
-      $breadCrumbs['@context'] = "http://schema.org";
-      $breadCrumbs['@type'] = "BreadcrumbList";
-      $breadCrumbs['itemListElement'] = self::breadcrumbs_json();
-
-      $schema[] = $breadCrumbs;
-    }
-
-    $json = json_encode($schema, JSON_UNESCAPED_SLASHES);
-
-    return $json;
+    return (object) $localBusiness;
   }
 
   /*
@@ -255,7 +244,18 @@ class wp_schema_plugin_json {
       return $review;
     }
   } // rating
+} // class professionalService
 
+class wsp_breadcrumbs {
+  public function construct(){
+    $breadCrumbs['@context'] = "http://schema.org";
+    $breadCrumbs['@type'] = "BreadcrumbList";
+    $breadCrumbs['itemListElement'] = self::breadcrumbs_json();
+
+    // $json = json_encode($breadCrumbs, JSON_UNESCAPED_SLASHES);
+
+    return (object) $breadCrumbs;
+  }
 
   /*
   * Breadcrumbs
@@ -335,10 +335,6 @@ class wp_schema_plugin_json {
       'title' => get_the_title(get_the_title())
     ];
 
-    // echo '<h1 styl="color: salmon;"> ' . count($crumbs) . '</h1><pre>';
-    // print_r($crumbs);
-    // echo "</pre>";
-
     $crumbs = array_filter(array_map('array_filter', $crumbs));
 
     return $crumbs;
@@ -404,16 +400,24 @@ class wp_schema_plugin_json {
       return $slices;
     }
   }// breadcrumb json
-
-}
+} // class breadcrumb
 
 function wsp_json() {
-  $jsonld = new wp_schema_plugin_json;
-  $jsonld = $jsonld->construct();
+  $html .= '<script type="application/ld+json">';
 
-  echo '<script type="application/ld+json">';
-  echo $jsonld;
-  echo '</script>';
+  $local_business = new wsp_localbusiness;
+  $local_business = $local_business->construct();
+  $json[] = $local_business;
+
+  if(get_option('wsp_Breadcrumbs')){
+    $breadcrumbs = new wsp_breadcrumbs;
+    $breadcrumbs = $breadcrumbs->construct();
+    $json[] = $breadcrumbs;
+  }
+  $html .= json_encode($json, JSON_UNESCAPED_SLASHES);
+  $html .= '</script>' . "\n";
+
+  echo $html;
 }
 
 add_action('wp_head', 'wsp_json');

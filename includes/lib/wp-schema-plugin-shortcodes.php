@@ -51,7 +51,7 @@ function wsp_testimonials( /*$atts, $content = null*/ ) {
 *	returns breadcrumbs
 */
 function wsp_breadcrumbs() {
-	$crumbs = new wp_schema_plugin_json();
+	$crumbs = new wsp_breadcrumbs();
 	$html = $crumbs->breadcrumbs_html();
 
 	echo $html;

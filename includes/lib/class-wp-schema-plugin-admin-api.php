@@ -141,6 +141,22 @@ class wp_schema_plugin_Admin_API
                 $html .= '</select> ';
             break;
 
+            case 'articles':
+              $html .= '<select name="'.esc_attr($option_name).'" id="'.esc_attr($field['id']).'">';
+              $html .= '<option value="">';
+
+              $pages = get_pages();
+              foreach( $pages as $k => $v ) {
+                $selected = false;
+                if ($v->ID == $data) {
+                    $selected = true;
+                }
+              	$html .= '<option '.selected($selected, true, false).' value="'.esc_attr($v->ID).'">'.$v->post_title.'</option>';
+              }
+
+              $html .= '</select>';
+            break;
+
             case 'select_multi':
                 $html .= '<select name="'.esc_attr($option_name).'[]" id="'.esc_attr($field['id']).'" multiple="multiple">';
                 foreach ($field['options'] as $k => $v) {
