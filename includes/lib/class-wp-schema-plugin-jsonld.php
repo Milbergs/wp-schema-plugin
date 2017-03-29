@@ -54,27 +54,27 @@ class wsp_localbusiness {
   * returns the main address
   */
   public function address(){
-    $address = [
+    $address = array(
       "@type" => "PostalAddress",
       "streetAddress" => get_option('wsp_Address'),
       "addressLocality" => get_option('wsp_City'),
       "addressRegion" => get_option('wsp_StateRegion'),
       "postalCode" => get_option('wsp_PostalCode'),
       "addressCountry" => get_option('wsp_Country')
-    ];
+    );
 
-    return (object) $address;
+    return $address;
   } // address
 
   /*
   * returns geographic coordinates
   */
   public function geo(){
-    $geo =  [
+    $geo =  array(
       "@type" => "GeoCoordinates",
       "latitude" => get_option('wsp_Lattitude'),
       "longitude" => get_option('wsp_Longtitude')
-    ];
+    );
 
     return $geo;
   } // geo
@@ -102,11 +102,11 @@ class wsp_localbusiness {
 
   // return contact information
   public function contactPoint(){
-    $contactPoint = [
+    $contactPoint = array(
       "@type" => "ContactPoint",
       "telephone" => '+1' . get_option('wsp_BusinessPhone'),
       "contactType" => "customer service"
-    ];
+    );
 
     return $contactPoint;
   } // contact Point

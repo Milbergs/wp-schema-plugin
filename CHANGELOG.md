@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.3.2] - 2017-03-29
 ### Added
 - Settings "articles" option that displays dropdown box of articles;
+- php 5.3 support
 
 ### Changed
 - optimized php, some conflicts solved;
