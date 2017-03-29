@@ -2,7 +2,8 @@
 
 OTM Homemade Schema (JSON-LD) plugin for Wordpress.
 
-Features:
+## Features
+
 - places JSON-LD information in website header for spiders to crawl;
 - fully compliant with Google recommended schema markup;
 - provides contact information about Local Business and can be later extended to other business types;
@@ -11,7 +12,7 @@ Features:
 - adds settings page with generous recommendations for better crawling, some fields have sane defaults, others default to best available alternative;
 - [wsp_stars] shortcode for individual testimonials;
 
-### Installing
+## Installing
 
 - drop this plugin in /wp-content/plugins/;
 - activate from Wordpress Plugin manager;
