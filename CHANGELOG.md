@@ -6,16 +6,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## ToDo
 - core
-  - create Schema Person for one and/or more attorneys for even better Google™ Rich Snippets;
   - optimize js code, search for security issues;
   - clean uninstall;
+  - update notify;
   - create multiple department support with dynamic settings subpage;
   - create shortcodes for every department;
-  - new shortcode to call settings elements (addresses, phone numbers etc);
-  - new shortcode to display either all or individual social network profiles;
-- testimonial shortcode
-  - allow display single testimonial by id;
-- JSONLD for menu items (must sort out ID uniqueness problem);
+- would be awesome:
+  - detect existing Testimonial post types, assign star rating system in the editor and use existing Testimonial data;
+
+## [1.4.0] - 2017-04-03
+### Added
+- `[wsp_social]` / `wsp_social( $args )` - displays HTML formatted font-awesome icons with social network urls. **Note, that due to Avvo logo absence form Font-Awesome, the SVG file has to be given size and fillcolor.** Can be called with:
+  - `raw="true"` - returns just raw `'network'=>'//example.com/url'` for custom styling;
+- `[wsp_info address]` / `wsp_info( $str )` - will return array of all address elements or can call: *address, facebook, twitter, google-plus, instagram, youtube, linkedin, myspace, pinterest, soundcloud, tumblr, yelp, avvo, phone*;
+
+### Changed
+- freshened up readme.md;
+- upgraded `wsp_testimonials` shortcode;
+  - `hr="true"` - will add `<hr>` after every testimonial *(default: `False`)*. Good for Testimonial display;
+  - `mode="raw"` - will return raw `array` of testimonial data without HTML formatting *(default: `html`)*. Good for custom modifications;
+  - `id="$id"` - will return only `$id` testimonial *(default: `False`)*. Good for highlighting specific testimonial;
+  - `limit="$n"` - limit to `$n` amount of newest testimonials. *(default: `-1`)*. Good for sliders;
+- schema for `Person` is now default;
+
+### Removed
+- `[wsp_stars]` became obsolete and had no usage;
 
 ## [1.3.2] - 2017-03-29
 ### Added

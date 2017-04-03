@@ -232,6 +232,7 @@ class wp_schema_plugin_Admin_API
             case 'text': $data = esc_attr($data); break;
             case 'url': $data = esc_url($data); break;
             case 'email': $data = is_email($data); break;
+            case 'textarea': $data = exc_textarea($data); break;
         }
 
         return $data;

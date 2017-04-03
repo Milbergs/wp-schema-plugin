@@ -13,3 +13,7 @@
 .wsp-review-name {
   text-transform: capitalize;
 }
+
+.fa-avvo:before {
+  content: url("../img/avvo.svg");
+}

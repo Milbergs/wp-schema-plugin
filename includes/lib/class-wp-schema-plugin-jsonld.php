@@ -24,7 +24,9 @@ class wsp_localbusiness {
     $localBusiness['priceRange'] = self::priceRange();
     $localBusiness['sameAs'] = self::sameAs();
     $localBusiness['aggregateRating'] = self::aggregateRating();
+
     $localBusiness['review'] = self::review();
+
     $localBusiness = array_filter($localBusiness);
 
     // $json = json_encode($localBusiness, JSON_UNESCAPED_SLASHES);
@@ -32,6 +34,10 @@ class wsp_localbusiness {
     return (object) $localBusiness;
   }
 
+
+  /*
+  * get business logo or do nothing
+  */
   public function businessLogo(){
     $logoObject = get_option('wsp_BusinessLogo');
     if($logoObject){
@@ -41,12 +47,22 @@ class wsp_localbusiness {
     }
   }
 
+  /*
+  * get business image or use business logo
+  */
   public function businessImage(){
-    $logoObject = get_option('wsp_BusinessImage');
-    if($logoObject){
-      $logoSrc = wp_get_attachment_image_src($logoObject);
-      $logoUrl = $logoSrc[0];
-      return $logoUrl;
+
+    $businessImage = get_option('wsp_BusinessImage');
+
+    if($businessImage) {
+      $imageObject = get_option('wsp_BusinessImage');
+      if($imageObject){
+        $imageSrc = wp_get_attachment_image_src($imageObject);
+        $imageUrl = $imageSrc[0];
+        return $imageUrl;
+      }
+    } else {
+      return self::businessLogo();
     }
   }
 
@@ -264,6 +280,9 @@ class wsp_localbusiness {
   } // rating
 } // class professionalService
 
+/*
+* breadcrumbs
+*/
 class wsp_breadcrumbs {
   public function construct(){
     $breadCrumbs['@context'] = "http://schema.org";
@@ -420,6 +439,27 @@ class wsp_breadcrumbs {
   }// breadcrumb json
 } // class breadcrumb
 
+class wsp_person {
+  public function construct(){
+    $person["@context"] = "http://schema.org";
+    $person["@type"] = "Person";
+    $person["name"] = get_option('wsp_PersonName');
+    $person["jobTitle"] = get_option('wsp_PersonJobTitle');
+    // $person["affiliation"] = get_bloginfo('name');
+    $person["url"] = '#person';
+    $person["address"] = array(
+      "@type" => "PostalAddress",
+      "streetAddress" => get_option('wsp_Address'),
+      "addressLocality" => get_option('wsp_City'),
+      "addressRegion" => get_option('wsp_StateRegion'),
+      "postalCode" => get_option('wsp_PostalCode'),
+      "addressCountry" => get_option('wsp_Country')
+    );
+
+    return (object) $person;
+  }
+}
+
 function wsp_json() {
   $html .= '<script type="application/ld+json">';
 
@@ -431,6 +471,11 @@ function wsp_json() {
     $breadcrumbs = new wsp_breadcrumbs;
     $breadcrumbs = $breadcrumbs->construct();
     $json[] = $breadcrumbs;
+  }
+  if(get_option('wsp_PersonName')){
+    $person = new wsp_person;
+    $person = $person->construct();
+    $json[] = $person;
   }
   $html .= json_encode($json);
   $html .= '</script>' . "\n";

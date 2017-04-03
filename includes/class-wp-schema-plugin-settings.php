@@ -262,8 +262,24 @@ class wp_schema_plugin_Settings
                     )
                 ),
                 array(
+                    'id'             => 'PersonName',
+                    'label'          => __('Person Name', 'wp-schema-plugin'),
+                    'description'    => __('', 'wp-schema-plugin'),
+                    'type'           => 'text',
+                    'default'        => '',
+                    'placeholder'    => __('Name Surname', 'wp-schema-plugin')
+                ),
+                array(
+                    'id'             => 'PersonJobTitle',
+                    'label'          => __('Person Job Title', 'wp-schema-plugin'),
+                    'description'    => __('', 'wp-schema-plugin'),
+                    'type'           => 'text',
+                    'default'        => 'Attorney',
+                    'placeholder'    => __('', 'wp-schema-plugin')
+                ),
+                array(
                     'id'             => 'BusinessName',
-                    'label'          => __('BusinessName', 'wp-schema-plugin'),
+                    'label'          => __('Business Name', 'wp-schema-plugin'),
                     'description'    => __('Recommended to be in site title', 'wp-schema-plugin'),
                     'type'           => 'text',
                     'default'        => get_bloginfo('name'),

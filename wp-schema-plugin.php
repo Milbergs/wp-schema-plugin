@@ -1,13 +1,15 @@
 <?php
 /*
  * Plugin Name: WP Schema Plugin
- * Version: 1.3.2
+ * Version: 1.4.0
  * Plugin URI: http://www.onthemapmarketing.com/
  * Description: Schema enhancement for Wordpress.
  * Author: On The Map Marketing
  * Author URI: http://www.onthemapmarketing.com/
  * Requires at least: 4.0
  * Tested up to: 4.0
+ * GitHub Plugin URI: /start-jobs/wp-schema-plugin
+ * GitHub Plugin URI: https://github.com/start-jobs/wp-schema-plugin
  *
  * Text Domain: wp-schema-plugin
  * Domain Path: /lang/
@@ -21,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Load plugin class files
 require_once( 'includes/class-wp-schema-plugin.php' );
+// require_once( 'includes/class-wp-schema-plugin-updater.php' );
 require_once( 'includes/class-wp-schema-plugin-settings.php' );
 
 // Load plugin libraries
@@ -38,7 +41,7 @@ require_once( 'includes/lib/class-wp-schema-plugin-jsonld.php' );
  * @return object wp_schema_plugin
  */
 function wp_schema_plugin () {
-	$instance = wp_schema_plugin::instance( __FILE__, '1.3.2' );
+	$instance = wp_schema_plugin::instance( __FILE__, '1.4.0' );
 
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = wp_schema_plugin_Settings::instance( $instance );
@@ -54,5 +57,9 @@ wp_schema_plugin();
 // create custom testimonial post type
 wp_schema_plugin()->register_post_type( 'wsp_testimonials', __( 'Testimonials', 'wp-schema-plugin' ), __( 'Testimonials', 'wp-schema-plugin' ) );
 
-// require to use custom archive page for testimonials
-// require plugin_dir_url( '/assets/archives-wsp_testimonials.php' );
+// // enhgage the updater
+// $updater = new wp_schema_plugin_updater( __FILE__ );
+// $updater->set_username( 'start-jobs' );
+// $updater->set_repository( 'wp-schema-plugin' );
+// // $updater->authorize( 'abcdefghijk1234567890' ); // Your auth code goes here for private repos
+// $updater->initialize();
