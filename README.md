@@ -32,7 +32,7 @@ It is advised to use php functions from within the theme rather than `do_shortco
 - `[wsp_breadcrumbs]` / `wsp_breadcrumbs( $args )` - returns all breadcrumbs of current page. Suitable to put under header or above main element;
 - `[wsp_social]` / `wsp_social( $args )` - displays HTML formatted font-awesome icons with social network urls. **Note, that due to Avvo logo absence form Font-Awesome, the SVG file has to be given size and fillcolor.** Can be called with:
   - `raw="true"` - returns just raw `'network'=>'//example.com/url'` for custom styling;
-- `[wsp_info address]` - will return array of all address elements or can call: *address, facebook, twitter, google-plus, instagram, youtube, linkedin, myspace, pinterest, soundcloud, tumblr, yelp, avvo, phone*;
+- `[wsp_info address]` - will return array of all address elements or can call: *address, phone, name, facebook, twitter, google-plus, instagram, youtube, linkedin, myspace, pinterest, soundcloud, tumblr, yelp, avvo*;
 
 ## ToDo
 See CHANGELOG.md for details

@@ -147,8 +147,14 @@
 	function wsp_info( $arg ){
 		switch ($arg[0]) {
 			case 'address':
-				$a = new wsp_localbusiness;
-				$output = $a->address();
+				$a = new wsp_person;
+				$output = $a->address;
+				break;
+			case 'name':
+				$output = get_option('wsp_PersonName');
+				break;
+			case 'phone':
+				$output = get_option('wsp_BusinessPhone');
 				break;
 			case 'facebook':
 				$output = get_option('wsp_social_facebook');
@@ -186,10 +192,6 @@
 			case 'avvo':
 				$output = get_option('wsp_social_avvo');
 				break;
-			case 'phone':
-				$output = get_option('wsp_BusinessPhone');
-				break;
-
 			default:
 				$output = _e('Nothing to output');
 				break;

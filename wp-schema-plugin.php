@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name: WP Schema Plugin
  * Version: 1.4.0
  * Plugin URI: http://www.onthemapmarketing.com/
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Load plugin class files
 require_once( 'includes/class-wp-schema-plugin.php' );
-// require_once( 'includes/class-wp-schema-plugin-updater.php' );
+require_once( 'includes/class-wp-schema-plugin-updater.php' );
 require_once( 'includes/class-wp-schema-plugin-settings.php' );
 
 // Load plugin libraries
@@ -55,11 +55,11 @@ function wp_schema_plugin () {
 wp_schema_plugin();
 
 // create custom testimonial post type
-wp_schema_plugin()->register_post_type( 'wsp_testimonials', __( 'Testimonials', 'wp-schema-plugin' ), __( 'Testimonials', 'wp-schema-plugin' ) );
+wp_schema_plugin()->register_post_type( 'wsp_testimonials', __( 'Testimonials', 'wp-schema-plugin' ), __( 'Testimonial', 'wp-schema-plugin' ) );
 
 // // enhgage the updater
-// $updater = new wp_schema_plugin_updater( __FILE__ );
-// $updater->set_username( 'start-jobs' );
-// $updater->set_repository( 'wp-schema-plugin' );
-// // $updater->authorize( 'abcdefghijk1234567890' ); // Your auth code goes here for private repos
-// $updater->initialize();
+$updater = new wp_schema_plugin_updater( __FILE__ );
+$updater->set_username( 'start-jobs' );
+$updater->set_repository( 'wp-schema-plugin' );
+// $updater->authorize( 'abcdefghijk1234567890' ); // Your auth code goes here for private repos
+$updater->initialize();

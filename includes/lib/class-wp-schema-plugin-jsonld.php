@@ -2,7 +2,6 @@
 /*
 where all the magic happens
 */
-
 class wsp_localbusiness {
 
   public function construct()  {
@@ -461,7 +460,7 @@ class wsp_person {
 }
 
 function wsp_json() {
-  $html .= '<script type="application/ld+json">';
+  $html = '<script type="application/ld+json">';
 
   $local_business = new wsp_localbusiness;
   $local_business = $local_business->construct();
