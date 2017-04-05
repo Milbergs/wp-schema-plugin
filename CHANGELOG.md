@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - would be awesome:
   - detect existing Testimonial post types, assign star rating system in the editor and use existing Testimonial data;
 
+## [1.4.2] - 2017-04-05
+### Fixed
+- some shortcode issues;
+
 ## [1.4.1] - 2017-04-04
 ### Changed
 - added support for wsp-testimonials after wsp-schema-plugin uninstall;

@@ -48,13 +48,11 @@
 				$testimonials = get_posts( $args );
 
 				foreach ( $testimonials as $testimonial ){
-					setup_postdata( $testimonial );
-
 					$output[] = (object) array(
 						'ID' => $testimonial->ID,
-						'date' => get_the_date(),
-						'content' => get_the_content(),
-						'title' => get_the_title(),
+						'date' => $testimonial->post_date,
+						'content' => $testimonial->post_content,
+						'title' => $testimonial->post_title,
 						'stars' => get_post_meta( $testimonial->ID, '_wsp_stars', true )
 					);
 				}

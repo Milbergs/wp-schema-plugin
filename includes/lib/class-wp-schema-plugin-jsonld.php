@@ -54,12 +54,9 @@ class wsp_localbusiness {
     $businessImage = get_option('wsp_BusinessImage');
 
     if($businessImage) {
-      $imageObject = get_option('wsp_BusinessImage');
-      if($imageObject){
-        $imageSrc = wp_get_attachment_image_src($imageObject);
-        $imageUrl = $imageSrc[0];
-        return $imageUrl;
-      }
+      $imageSrc = wp_get_attachment_image_src($businessImage);
+      $imageUrl = $imageSrc[0];
+      return $imageUrl;
     } else {
       return self::businessLogo();
     }
@@ -171,7 +168,7 @@ class wsp_localbusiness {
   public function priceRange(){
     $priceRange = get_option('wsp_PriceRange');
 
-    if($priceRange){
+    if(isset($priceRange)){
       return $priceRange;
     }
   } // price range
