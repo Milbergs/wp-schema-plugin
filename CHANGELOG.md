@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - create multiple department support with dynamic settings subpage;
 - create shortcodes for every department;
 
+## [1.4.4] - 2017-04-07
+### Added
+- added `WP_GitHub_Updater` as a test;
+
 ## [1.4.3] - 2017-04-07
 ### Added
 - on uninstall deletes all `option`s set by the plugin;
