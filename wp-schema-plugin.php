@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Schema Plugin
- * Version: 1.4.2
+ * Version: 1.4.3
  * Plugin URI: http://www.onthemapmarketing.com/
  * Description: Schema enhancement for Wordpress.
  * Author: On The Map Marketing
@@ -33,7 +33,6 @@ require_once( 'includes/lib/class-wp-schema-plugin-taxonomy.php' );
 require_once( 'includes/lib/wp-schema-plugin-testimonial-meta.php' );
 require_once( 'includes/lib/wp-schema-plugin-shortcodes.php' );
 require_once( 'includes/lib/class-wp-schema-plugin-jsonld.php' );
-
 /**
  * Returns the main instance of wp_schema_plugin to prevent the need to use globals.
  *
@@ -41,7 +40,7 @@ require_once( 'includes/lib/class-wp-schema-plugin-jsonld.php' );
  * @return object wp_schema_plugin
  */
 function wp_schema_plugin () {
-	$instance = wp_schema_plugin::instance( __FILE__, '1.4.2' );
+	$instance = wp_schema_plugin::instance( __FILE__, '1.4.3' );
 
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = wp_schema_plugin_Settings::instance( $instance );

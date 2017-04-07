@@ -5,14 +5,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## ToDo
-- core
-  - optimize js code, search for security issues;
-  - clean uninstall;
-  - update notify;
-  - create multiple department support with dynamic settings subpage;
-  - create shortcodes for every department;
-- would be awesome:
-  - detect existing Testimonial post types, assign star rating system in the editor and use existing Testimonial data;
+- automatic updating;
+- optimize js code, search for security issues;
+- create multiple department support with dynamic settings subpage;
+- create shortcodes for every department;
+
+## [1.4.3] - 2017-04-07
+### Added
+- on uninstall deletes all `option`s set by the plugin;
+- on uninstall downloads [`wsp-testimonials`](//github.com/kasparsp/wsp-testimonials) plugin to keep testimonial support after `wp-schema-plugin` is gone;
+- now the plugin enqueues `font-awesome` by default;
+
+### Changed
+- changed Avvo icon to inline svg, but the `height`, `width` and `fill` color will have to be changed in the file itself for now. Bets bet is to have font-awesome implement Avvo icon, but it will not happen soon.
+
+### Fixed
+- some more shortcode issues with wsp_testimonials returning error when no stars provided;
+- styling issues caused by lack of 'dashicons' in enqueue;
+- removed some fallout files;
 
 ## [1.4.2] - 2017-04-05
 ### Fixed

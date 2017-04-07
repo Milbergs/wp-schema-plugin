@@ -158,6 +158,8 @@ class wp_schema_plugin {
 	public function enqueue_styles () {
 		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', array(), $this->_version );
 		wp_enqueue_style( $this->_token . '-frontend' );
+		wp_enqueue_style( 'dashicons' );
+		wp_enqueue_style( 'style-name', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
 	} // End enqueue_styles ()
 
 	/**

@@ -68,11 +68,13 @@
 
 				<div class="wsp wsp-review wsp-review-<?php echo $html->ID; ?>">
 					<p class="wsp wsp-review-content"><?php echo $html->content; ?></p>
-					<p class="wsp wsp-review-rating">
-						<span class="wsp wsp-stars wsp-stars-<?php $html->ID ?>">
-							<?php echo str_repeat($star, $html->stars); ?>
-						</span>
-					</p>
+					<?php if($html->stars):?>
+						<p class="wsp wsp-review-rating">
+							<span class="wsp wsp-stars wsp-stars-<?php $html->ID ?>">
+								<?php echo str_repeat($star, $html->stars); ?>
+							</span>
+						</p>
+					<?php endif; ?>
 					<p class="wsp wsp-review-name"><?php echo $html->title; ?></p>
 				</div>
 				<?php if($a['hr']): ?>
@@ -80,6 +82,8 @@
 				<?php endif; ?>
 
 				<?php endforeach;
+				wp_reset_postdata();
+
 			}
 	}
 
@@ -101,27 +105,6 @@
 		$a = shortcode_atts( array(
 			'raw' => false
 		), $atts );
-
-		// if($a['id'] == false){
-		// 	$socials = array(
-		// 		"facebook" => get_option('wsp_social_facebook'),
-		// 		"twitter" => get_option('wsp_social_twitter'),
-		// 		"google-plus" => get_option('wsp_social_google-plus'),
-		// 		"instagram" => get_option('wsp_social_instagram'),
-		// 		"youtube" => get_option('wsp_social_youtube'),
-		// 		"linkedin" => get_option('wsp_social_linkedin'),
-		// 		"myspace" => get_option('wsp_social_myspace'),
-		// 		"pinterest" => get_option('wsp_social_pinterest'),
-		// 		"soundcloud" => get_option('wsp_social_soundcloud'),
-		// 		"tumblr" => get_option('wsp_social_tumblr'),
-		// 		"avvo" => get_option('wsp_social_avvo'),
-		// 		"yelp" => get_option('wsp_social_yelp')
-		// 	);
-		// } else {
-		// 	$socials = array(
-		// 		$a['id'] => get_option('wsp_social_' . $a['id'])
-		// 	);
-		// }
 
 		$socials = array_filter($socials);
 
