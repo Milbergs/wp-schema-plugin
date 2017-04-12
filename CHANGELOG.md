@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - create multiple department support with dynamic settings subpage;
 - create shortcodes for every department;
 
+## [1.4.5] - 2017-04-12
+### Changed
+- Added wrapper to social shortcodes, fixed shortcodes;
+
 ## [1.4.4] - 2017-04-07
 ### Added
 - added `WP_GitHub_Updater` as a test;

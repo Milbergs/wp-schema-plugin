@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Schema Plugin
- * Version: 1.4.4
+ * Version: 1.4.5
  * Plugin URI: http://www.onthemapmarketing.com/
  * Description: Schema enhancement for Wordpress.
  * Author: On The Map Marketing
@@ -40,7 +40,7 @@ require_once( 'includes/lib/class-wp-schema-plugin-jsonld.php' );
  * @return object wp_schema_plugin
  */
 function wp_schema_plugin () {
-	$instance = wp_schema_plugin::instance( __FILE__, '1.4.4' );
+	$instance = wp_schema_plugin::instance( __FILE__, '1.4.5' );
 
 	if ( is_null( $instance->settings ) ) {
 		$instance->settings = wp_schema_plugin_Settings::instance( $instance );
@@ -61,8 +61,10 @@ function wp_schema_plugin () {
 			'readme' => 'README.md', // which file to use as the readme for the version number
 			'access_token' => '', // Access private repositories by authorizing under Appearance > GitHub Updates when this example plugin is installed
 		);
-		new WP_GitHub_Updater($config);
+		$test = new WP_GitHub_Updater($config);
 	}
+
+	echo "current: " . $text->config->version . "/ new: " .$text->config->new_version;
 
 	return $instance;
 }

@@ -106,19 +106,40 @@
 			'raw' => false
 		), $atts );
 
+ 		if($a['id'] == false){
+			$socials = array(
+				"facebook" => get_option('wsp_social_facebook'),
+				"twitter" => get_option('wsp_social_twitter'),
+				"google-plus" => get_option('wsp_social_google-plus'),
+				"instagram" => get_option('wsp_social_instagram'),
+				"youtube" => get_option('wsp_social_youtube'),
+				"linkedin" => get_option('wsp_social_linkedin'),
+				"myspace" => get_option('wsp_social_myspace'),
+				"pinterest" => get_option('wsp_social_pinterest'),
+				"soundcloud" => get_option('wsp_social_soundcloud'),
+				"tumblr" => get_option('wsp_social_tumblr'),
+				"avvo" => get_option('wsp_social_avvo'),
+				"yelp" => get_option('wsp_social_yelp')
+			);
+		} else {
+			$socials = array(
+				$a['id'] => get_option('wsp_social_' . $a['id'])
+			);
+		}
+
 		$socials = array_filter($socials);
 
 		if ( $a['raw'] == true ){
 			return $socials;
 		} else {
+			$html = '<div class="wsp wsp-social-wrapper">';
 			foreach ( $socials as $key => $val){
-				$html = '';
 				$html .= '<a class="wsp wsp-social wsp-social-'.$key.'" href="'. $val .'" title="'.$key.'" target="_blank">';
 				$html .= '<i class="fa fa-'.$key.' wsp-social-icon" aria-hidden="true"></i>';
 				$html .= '</a>';
-
-				echo $html;
 			}
+			$html .= "</div>";
+			echo $html;
 		}
 	}
 
