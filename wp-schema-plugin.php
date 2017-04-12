@@ -64,8 +64,6 @@ function wp_schema_plugin () {
 		$test = new WP_GitHub_Updater($config);
 	}
 
-	echo "current: " . $text->config->version . "/ new: " .$text->config->new_version;
-
 	return $instance;
 }
 
