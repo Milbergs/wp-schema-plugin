@@ -5,10 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## ToDo
-- automatic updating;
-- optimize js code, search for security issues;
 - create multiple department support with dynamic settings subpage;
 - create shortcodes for every department;
+
+## [1.4.6] - 2017-04-24
+### Changed
+- Now you can disable Rating system completely (helpful if Google sanctions the website);
 
 ## [1.4.5] - 2017-04-12
 ### Changed

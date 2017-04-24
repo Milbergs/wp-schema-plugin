@@ -64,27 +64,27 @@
 			} else {
 				$star = '<span class="dashicons dashicons-star-filled"></span>';
 
+				ob_start();
 				foreach($output as $html): ?>
-
-				<div class="wsp wsp-review wsp-review-<?php echo $html->ID; ?>">
-					<p class="wsp wsp-review-content"><?php echo $html->content; ?></p>
-					<?php if($html->stars):?>
-						<p class="wsp wsp-review-rating">
-							<span class="wsp wsp-stars wsp-stars-<?php $html->ID ?>">
-								<?php echo str_repeat($star, $html->stars); ?>
-							</span>
-						</p>
-					<?php endif; ?>
-					<p class="wsp wsp-review-name"><?php echo $html->title; ?></p>
-				</div>
-				<?php if($a['hr']): ?>
-					<hr class="wsp-hr">
-				<?php endif; ?>
-
+						<div class="wsp wsp-review wsp-review-<?php echo $html->ID; ?>">
+							<p class="wsp wsp-review-content"><?php echo $html->content; ?></p>
+							<?php if($html->stars):?>
+								<p class="wsp wsp-review-rating">
+									<span class="wsp wsp-stars wsp-stars-<?php $html->ID ?>">
+										<?php echo str_repeat($star, $html->stars); ?>
+									</span>
+								</p>
+							<?php endif; ?>
+							<p class="wsp wsp-review-name"><?php echo $html->title; ?></p>
+						</div>
+						<?php if($a['hr']): ?>
+							<hr class="wsp-hr">
+						<?php endif; ?>
 				<?php endforeach;
 				wp_reset_postdata();
-
+				return ob_get_clean();
 			}
+
 	}
 
 
@@ -132,6 +132,7 @@
 		if ( $a['raw'] == true ){
 			return $socials;
 		} else {
+			ob_start();
 			$html = '<div class="wsp wsp-social-wrapper">';
 			foreach ( $socials as $key => $val){
 				$html .= '<a class="wsp wsp-social wsp-social-'.$key.'" href="'. $val .'" title="'.$key.'" target="_blank">';
@@ -139,7 +140,7 @@
 				$html .= '</a>';
 			}
 			$html .= "</div>";
-			echo $html;
+			return ob_get_clean();
 		}
 	}
 

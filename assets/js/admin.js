@@ -10,24 +10,25 @@ jQuery(document).ready(function($){
     $(this).find('.dashicons').addClass('dashicons-star-filled');
   });
 
+  var star_type = $('#Startype').val();
+  showRating(star_type);
 
-  // initially check status of #ToggleAutomatic, hide unnecessary fields
-  if( $('#ToggleAutomatic').is(':checked')) {
-      $('#ManualRating').closest('tr').fadeOut();
-      $('#ManualReviews').closest('tr').fadeOut();
-  } else {
-    $('#ManualRating').closest('tr').fadeIn();
-    $('#ManualReviews').closest('tr').fadeIn();
+
+  $('#Startype').change(function(){
+    var selected = $(this).val();
+    showRating(selected);
+  });
+
+  function showRating(value){
+    switch (value) {
+      case "manual":
+        $('#ManualRating').closest('tr').fadeIn();
+        $('#ManualReviews').closest('tr').fadeIn();
+      break;
+      default:
+        $('#ManualRating').closest('tr').hide();
+        $('#ManualReviews').closest('tr').hide();
+    }
   }
 
-  // check #ToggleAutomatic status and hide unnecessary fields
-  $('#ToggleAutomatic').change(function(){
-    if( $('#ToggleAutomatic').is(':checked')) {
-        $('#ManualRating').closest('tr').fadeOut();
-        $('#ManualReviews').closest('tr').fadeOut();
-    } else {
-      $('#ManualRating').closest('tr').fadeIn();
-      $('#ManualReviews').closest('tr').fadeIn();
-    }
-  })
 });

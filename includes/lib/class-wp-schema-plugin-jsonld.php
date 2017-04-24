@@ -201,37 +201,53 @@ class wsp_localbusiness {
   public function aggregateRating(){
 
     // determine if automatic or manly
-    $mode = get_option('wsp_ToggleAutomatic');
+    $mode = get_option('wsp_Startype');
 
-    // if automatic ... else ...
-    if($mode == 'on'){
-      global $wpdb;
-      $results = $wpdb->get_results( "SELECT meta_value FROM wp_postmeta WHERE meta_key = '_wsp_stars'", ARRAY_A );
 
-      if($results){
-        foreach($results as $result){
-          $scores[] = $result['meta_value'];
+    switch ($mode) {
+      case 'automatic':
+        global $wpdb;
+        $results = $wpdb->get_results( "SELECT meta_value FROM wp_postmeta WHERE meta_key = '_wsp_stars'", ARRAY_A );
+
+        if($results){
+          foreach($results as $result){
+            $scores[] = $result['meta_value'];
+          }
+
+          $reviewCount = count($scores);
+          $ratingValue = array_sum($scores) / $reviewCount;
+
+        } else {
+          $reviewCount = false;
+          $ratingValue = false;
         }
 
-        $reviewCount = count($scores);
-        $ratingValue = array_sum($scores) / $reviewCount;
+        $rating = array(
+          "@type" => "AggregateRating",
+          "ratingValue" => $ratingValue,
+          "reviewCount" => $reviewCount
+        );
 
-      } else {
-        $reviewCount = false;
-        $ratingValue = false;
-      }
-    } else {
-      $ratingValue = get_option('wsp_ManualRating');
-      $reviewCount = get_option('wsp_ManualReviews');
+        break;
+
+      case 'manual':
+        $ratingValue = get_option('wsp_ManualRating');
+        $reviewCount = get_option('wsp_ManualReviews');
+
+        $rating = array(
+          "@type" => "AggregateRating",
+          "ratingValue" => $ratingValue,
+          "reviewCount" => $reviewCount
+        );
+
+        break;
+
+      default:
+        # code...
+        break;
     }
-
-    $rating = array(
-      "@type" => "AggregateRating",
-      "ratingValue" => $ratingValue,
-      "reviewCount" => $reviewCount
-    );
-
     return $rating;
+
   }// Aggregate Rating
 
   /*
@@ -239,9 +255,9 @@ class wsp_localbusiness {
   */
   public function review(){
     // determine if automatic or manly
-    $mode = get_option('wsp_ToggleAutomatic');
+    $mode = get_option('wsp_Startype');
 
-    if($mode == 'on'){
+    if($mode == 'automatic'){
       global $wpdb;
       $testimonials = $wpdb->get_results( "SELECT ID, post_title, post_content, post_date FROM wp_posts WHERE post_type = 'wsp_testimonials' AND post_status = 'publish'", ARRAY_A );
 
