@@ -82,7 +82,7 @@ class wp_schema_plugin {
 	 * @since   1.0.0
 	 * @return  void
 	 */
-	public function __construct ( $file = '', $version = '1.4.6' ) {
+	public function __construct ( $file = '', $version = '1.4.7' ) {
 
 		$this->_version = $version;
 		$this->_token = 'wp_schema_plugin';
