@@ -1,4 +1,4 @@
-# Wordpress Schema Plugin ~Current Version:1.4.6~
+# Wordpress Schema Plugin ~Current Version:1.4.7~
 
 OTM Homemade Schema (JSON-LD) plugin for Wordpress 4.
 
