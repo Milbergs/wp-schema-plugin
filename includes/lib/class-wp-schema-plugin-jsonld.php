@@ -243,7 +243,7 @@ class wsp_localbusiness {
         break;
 
       default:
-        # code...
+        $rating = '';
         break;
     }
     return $rating;

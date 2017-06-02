@@ -80,7 +80,7 @@ class wp_schema_plugin_Post_Type {
 			'all_items' 						=> sprintf( __( 'All %s' , 'wp-schema-plugin' ), $this->plural ),
 			'view_item' 						=> sprintf( __( 'View %s' , 'wp-schema-plugin' ), $this->single ),
 			'search_items' 					=> sprintf( __( 'Search %s' , 'wp-schema-plugin' ), $this->plural ),
-			'not_found' 						=>  sprintf( __( 'No %s Found' , 'wp-schema-plugin' ), $this->plural ),
+			'not_found' 						=> sprintf( __( 'No %s Found' , 'wp-schema-plugin' ), $this->plural ),
 			'not_found_in_trash' 		=> sprintf( __( 'No %s Found In Trash' , 'wp-schema-plugin' ), $this->plural ),
 			'parent_item_colon' 		=> sprintf( __( 'Parent %s' ), $this->single ),
 			'menu_name' 						=> $this->plural,
@@ -104,7 +104,7 @@ class wp_schema_plugin_Post_Type {
 			'show_in_rest'       		=> true,
   		'rest_base'          		=> $this->post_type,
   		'rest_controller_class' => 'WP_REST_Posts_Controller',
-			'supports' 							=> array( 'title', 'editor' ),
+			'supports' 							=> array( 'title', 'editor', 'thumbnail' ),
 			'menu_position' 				=> 5,
 			'menu_icon' 						=> 'dashicons-admin-post',
 		);

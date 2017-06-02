@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - create multiple department support with dynamic settings subpage;
 - create shortcodes for every department;
 
+## [1.4.7] - 2017-06-01
+### Fixed
+- fixed shortcode social issues;
+- fixed shortcode raw info issues;
+- fixed absent rating errors;
+
 ## [1.4.6] - 2017-04-24
 ### Changed
 - Now you can disable Rating system completely (helpful if Google sanctions the website);

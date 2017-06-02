@@ -60,7 +60,7 @@
 			}
 
 			if($a['mode'] == 'raw'){
-				return $output;
+				return json_encode($output);
 			} else {
 				$star = '<span class="dashicons dashicons-star-filled"></span>';
 
@@ -101,9 +101,10 @@
 	/*
 	* Socials
 	*/
-	function wsp_social( $atts ){
+	function wsp_social( $atts = false ){
 		$a = shortcode_atts( array(
-			'raw' => false
+			'raw' => false,
+			'id' => false
 		), $atts );
 
  		if($a['id'] == false){
@@ -140,6 +141,7 @@
 				$html .= '</a>';
 			}
 			$html .= "</div>";
+			echo $html;
 			return ob_get_clean();
 		}
 	}
@@ -148,10 +150,21 @@
 	*	Just return what is asked
 	*/
 	function wsp_info( $arg ){
-		switch ($arg[0]) {
+		switch ($arg) {
 			case 'address':
-				$a = new wsp_person;
-				$output = $a->address;
+				$output = get_option('wsp_Address');
+				break;
+			case 'city':
+				$output = get_option('wsp_City');
+				break;
+			case 'state':
+				$output = get_option('wsp_StateRegion');
+				break;
+			case 'index':
+				$output = get_option('wsp_PostalCode');
+				break;
+			case 'country':
+				$output = get_option('wsp_Country');
 				break;
 			case 'name':
 				$output = get_option('wsp_PersonName');
